@@ -1,0 +1,222 @@
+/*
+JSON config_file example
+*/
+{
+    "application_name"          : "My ERC20 Token", //only for description purpose
+
+    "version"                   : "0.0.1", //aplication version number to mange versions in pastries max
+    "project_name"              : "proj_Demo_ERC20", //project name used when building brownie
+
+    "code_source"               :"github", // instead it could be extra_files (files loaded directly in Extra files field: not supported yet)
+    "compiler_version"          : "0.6.7", //solidity or vyper compiler version
+
+    "github_repo"               : "fjribi/Demo_ERC20", //mast include usr or organization / repo, this path is used to build target location (with branche below)
+    "github_repo_isPublic"      : true, // if false => requires user / password (token)
+    "github_user"               : "fjribi", // used when non public 
+
+    "github_branche"            : "master", //repo stable verison branche
+
+    "contract_source_files"     : [
+                                    /*
+                                        relative path in the branche to access solidiy or vyper file in repo folder
+                                    */
+                                    "contracts/Token.sol",
+                                    "contracts/SafeMath.sol"
+                                    ],
+    "deployable_contracts"      : [
+                                    /*add the list of deployable contracts (exclude librairies, only relevent contract with useful funcitons)
+                                        code_name = contract code name in smart contract and ABI, also used in dropdown list as value (picked)
+                                        label_name = code label that will be displayed for user
+                                    */
+                                        {
+                                            "code_name":"Token", //as in ABI
+                                            "label_name":"ERC20 Token Contract", // displaye in interface dropdown list
+                                            "user_interface": {
+                                                "deploy_contract":[//list user interface function / input / output
+                                                        {
+                                                            "code_name":"constructor", //this field is required and must be = to constructor
+                                                            "label_name":"Deploy Contract",
+                                                            "inputs": [//list input fields
+                                                                  {
+                                                                      "code_name":"_name", //name in solidity and in build JSON code
+                                                                      "type": "string" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_constructor_name", //contract_function_input to make field name unique
+                                                                          "label": "Contract Displayed Name",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"The Contract Name as displayed for users!"
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_symbol", //name in solidity and in build JSON code
+                                                                      "type": "string" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_constructor_symbol",
+                                                                          "label": "Contract Symbol",
+                                                                          "type": "text",
+                                                                          "max_length": 50,
+                                                                          "required": 1,
+                                                                          "help_text":"The ERC20 Token Symbol as displayed for users!"
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_decimals", //name in solidity and in build JSON code
+                                                                      "type": "uint256" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_constructor_decimals",
+                                                                          "label": "Decimals",
+                                                                          "type": "integer",
+                                                                          "max_value": 50,
+                                                                          "min_value": 0,
+                                                                          "required": 1,
+                                                                          "help_text":"The number of decimals (1 tick)."
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_totalSupply", //name in solidity and in build JSON code
+                                                                      "type": "uint256" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_constructor_totalSupply",
+                                                                          "label": "Total Supply",
+                                                                          "type": "integer",
+                                                                          "max_value": 1.15e+77, //approx max 2^256
+                                                                          "min_value": 0,
+                                                                          "required": 1,
+                                                                          "help_text":"The Total Supply in ticks: ie (the total number of tokens) x (10^decimals)"
+                                                                          }
+                                                                  }
+                                                                ],
+                                                            "outputs":[],
+                                                            "help_text": "To deploy the selected ERC20 Token contract into Blockchain!"
+                                                        }
+                                                    ],
+                                                "write_contract":[//list function / input / output
+                                                        {
+                                                            "code_name":"transfer",
+                                                            "label_name":"Transfer Tokens",
+                                                            "inputs": [//list input fields
+                                                                  {
+                                                                      "code_name":"_to", //name in solidity and in build JSON code
+                                                                      "type": "address" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_transfer_to", //wr =write contreact + function name + code intput )=> unique field name
+                                                                          "label": "To",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"Enter Destination address"
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_value", //name in solidity and in build JSON code
+                                                                      "type": "uint256" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_transfer_value",
+                                                                          "label": "Amount",
+                                                                          "type": "integer",
+                                                                          "max_value": 1.15e+77, //approx max 2^256
+                                                                          "min_value": 0,
+                                                                          "required": 1,
+                                                                          "help_text":"The quantity to transfer in ticks: ie (number of tokens) x (10^decimals)"
+                                                                          }
+                                                                  }
+                                                                ],
+                                                            "outputs":[],
+                                                            "help_text": "To transfer tokens from sender account to a destination address!"
+                                                        },
+                                                        {
+                                                            "code_name":"transferFrom",
+                                                            "label_name":"Transfer Tokens From Account",
+                                                            "inputs": [//list input fields
+                                                                  {
+                                                                      "code_name":"_from", //name in solidity and in build JSON code
+                                                                      "type": "address" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_transferFrom_from", //wr =write contreact + function name + code intput )=> unique field name
+                                                                          "label": "From",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"Enter Source address"
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_to", //name in solidity and in build JSON code
+                                                                      "type": "address" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_transferFrom_to", //wr =write contreact + function name + code intput )=> unique field name
+                                                                          "label": "To",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"Enter Destination address"
+                                                                          }
+                                                                  },
+                                                                  {
+                                                                      "code_name":"_value", //name in solidity and in build JSON code
+                                                                      "type": "uint256" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_transferFrom_value",
+                                                                          "label": "Amount",
+                                                                          "type": "integer",
+                                                                          "max_value": 1.15e+77, //approx max 2^256
+                                                                          "min_value": 0,
+                                                                          "required": 1,
+                                                                          "help_text":"The quantity to transfer in ticks: ie (number of tokens) x (10^decimals)"
+                                                                          }
+                                                                  }
+                                                                ],
+                                                            "outputs":[],
+                                                            "help_text": "To transfer tokens from an approved account to a destination address!"
+                                                        }
+                                                    ],
+                                                "read_contract":[//list function / input / output
+                                                        {
+                                                            "code_name":"balanceOf",
+                                                            "label_name":"Get the Balance of an Account",
+                                                            "inputs": [//list input fields
+                                                                  {
+                                                                      "code_name":"_owner", //name in solidity and in build JSON code
+                                                                      "type": "address" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_balanceOf_owner", //wr =write contreact + function name + code intput )=> unique field name
+                                                                          "label": "Account Address",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"Enter Account address"
+                                                                          }
+                                                                  }
+                                                                ],
+                                                            "outputs":[
+                                                                  {
+                                                                      "code_name":"", //name in solidity and in build JSON code
+                                                                      "type": "uint256" , //build JSON interface type
+                                                                      "pastries_field" :{
+                                                                          "name": "Token_balanceOf_balance", //wr =write contreact + function name + code intput )=> unique field name
+                                                                          "label": "Balance (tokens)",
+                                                                          "type": "text",
+                                                                          "max_length": 100,
+                                                                          "required": 1,
+                                                                          "help_text":"Account balance in ticks: ie (number of tokens) x (10^decimals)"
+                                                                          }
+                                                                  }
+                                                            ],
+                                                            "help_text": "To get the balance (tokens) of an Account!"
+                                                        }
+                                                ]
+                                            }
+                                        }
+                                        /* ,{} to add other callable contracts*/
+                                    ],
+
+    "blockchain_networks"     : [
+                                    /* 
+                                        allowed blockchain networks to deploy contracts, codes used in pastries finance documentation
+                                    */
+                                    "ETH-MAINNET", // Ethereum MainNet
+                                    "ETH-KOVAN" //Kovan Test Net
+                                    ]
+}
