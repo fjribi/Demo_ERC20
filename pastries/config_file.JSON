@@ -4,7 +4,7 @@ JSON config_file example
 {
     "application_name"          : "My ERC20 Token", //only for description purpose
 
-    "version"                   : "0.0.1", //aplication version number to mange versions in pastries max
+    "version"                   : "0.0.2", //aplication version number to mange versions in pastries max
     "project_name"              : "proj_Demo_ERC20", //project name used when building brownie
 
     "code_source"               :"github", // instead it could be extra_files (files loaded directly in Extra files field: not supported yet)
@@ -217,6 +217,7 @@ JSON config_file example
                                         allowed blockchain networks to deploy contracts, codes used in pastries finance documentation
                                     */
                                     "ETH-MAINNET", // Ethereum MainNet
-                                    "ETH-KOVAN" //Kovan Test Net
+                                    "ETH-KOVAN", //Kovan Test Net
+                                    "ETH-PICCA-TESTNET" //Autonity Piccadilly TestNet 
                                     ]
 }
